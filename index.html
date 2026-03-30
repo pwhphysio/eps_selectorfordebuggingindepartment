@@ -553,7 +553,27 @@ function resetAll() {
         searchBox.value = "";
         searchBox.dispatchEvent(new Event("input"));
     }
+    collapseAll();
     refresh();
+}
+
+function collapseAll() {
+    var allLists = document.querySelectorAll('.exercise-list');
+    for (var a = 0; a < allLists.length; a++) {
+        allLists[a].classList.add('hidden');
+    }
+    var allSubExs = document.querySelectorAll('.subcat-exercises');
+    for (var b = 0; b < allSubExs.length; b++) {
+        allSubExs[b].classList.add('hidden');
+    }
+    var allChevrons = document.querySelectorAll('.chevron, .subcat-chevron');
+    for (var d = 0; d < allChevrons.length; d++) {
+        allChevrons[d].classList.add('collapsed');
+    }
+    var allH3 = document.querySelectorAll('.category h3');
+    for (var f = 0; f < allH3.length; f++) {
+        allH3[f].classList.add('collapsed');
+    }
 }
 
 function buildUI() {
@@ -564,20 +584,20 @@ function buildUI() {
         var c = EXERCISES[cat];
         html += '<div class="category cat-' + cat + '">';
         if (c.hasSubcats) {
-            html += '<h3 data-toggle-cat="' + cat + '">';
-            html += '<span class="chevron"></span>';
+            html += '<h3 class="collapsed" data-toggle-cat="' + cat + '">';
+            html += '<span class="chevron collapsed"></span>';
             html += '<span class="cat-label">' + c.label + ' Exercises</span>';
             html += '</h3>';
-            html += '<div class="exercise-list" id="catlist-' + cat + '">';
+            html += '<div class="exercise-list hidden" id="catlist-' + cat + '">';
             for (var sc in c.subcats) {
                 var sub = c.subcats[sc];
                 html += '<div class="subcat-wrapper">';
                 html += '<div class="subcat-header" data-toggle-subcat="' + sc + '">';
-                html += '<span class="subcat-chevron"></span>';
+                html += '<span class="subcat-chevron collapsed"></span>';
                 html += '<span class="subcat-label">' + sub.label + '</span>';
                 html += '<button class="subcat-select-all" data-selectall-subcat="' + sc + '">Select All</button>';
                 html += '</div>';
-                html += '<div class="subcat-exercises" id="subexs-' + sc + '">';
+                html += '<div class="subcat-exercises hidden" id="subexs-' + sc + '">';
                 for (var code in sub.exercises) {
                     var ex = sub.exercises[code];
                     var searchStr = (ex.name + ' ' + code + ' ' + sub.label).toLowerCase();
@@ -590,12 +610,12 @@ function buildUI() {
                 html += '</div></div>';
             }
         } else {
-            html += '<h3 data-toggle-cat="' + cat + '">';
-            html += '<span class="chevron"></span>';
+            html += '<h3 class="collapsed" data-toggle-cat="' + cat + '">';
+            html += '<span class="chevron collapsed"></span>';
             html += '<span class="cat-label">' + c.label + ' Exercises</span> ';
             html += '<button class="select-all-btn" data-selectall-cat="' + cat + '">Select All</button>';
             html += '</h3>';
-            html += '<div class="exercise-list" id="catlist-' + cat + '">';
+            html += '<div class="exercise-list hidden" id="catlist-' + cat + '">';
             for (var code2 in c.exercises) {
                 var nm = c.exercises[code2];
                 var searchStr2 = (nm + ' ' + code2).toLowerCase();
@@ -725,7 +745,6 @@ function generate() {
     var urlBox = document.getElementById('urlBox');
     if (urlBox) urlBox.textContent = url;
 
-    // Generate QR code immediately
     var qrDiv = document.getElementById('qrcode');
     if (qrDiv) {
         qrDiv.innerHTML = '';
@@ -895,6 +914,8 @@ function initApp() {
                     for (var f = 0; f < allH3.length; f++) {
                         allH3[f].classList.remove('collapsed');
                     }
+                } else {
+                    collapseAll();
                 }
             });
         }
