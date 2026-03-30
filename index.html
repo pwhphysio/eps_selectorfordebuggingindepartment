@@ -5,22 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercise Plan Generator</title>
 
-    <!-- QR Code Library (inline) -->
     <script>
 var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this.parsedData=[];for(var b=[],d=0,e=this.data.length;e>d;d++){var f=this.data.charCodeAt(d);f>65536?(b[0]=240|(1835008&f)>>>18,b[1]=128|(258048&f)>>>12,b[2]=128|(4032&f)>>>6,b[3]=128|63&f):f>2048?(b[0]=224|(61440&f)>>>12,b[1]=128|(4032&f)>>>6,b[2]=128|63&f):f>128?(b[0]=192|(1984&f)>>>6,b[1]=128|63&f):b[0]=f,this.parsedData=this.parsedData.concat(b)}this.parsedData.length!=this.data.length&&(this.parsedData.unshift(191),this.parsedData.unshift(187),this.parsedData.unshift(239))}function b(a,b){this.typeNumber=a,this.errorCorrectLevel=b,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=[]}function i(a,b){if(void 0==a.length)throw new Error(a.length+"/"+b);for(var c=0;c<a.length&&0==a[c];)c++;this.num=new Array(a.length-c+b);for(var d=0;d<a.length-c;d++)this.num[d]=a[d+c]}function j(a,b){this.totalCount=a,this.dataCount=b}function k(){this.buffer=[],this.length=0}function m(){return"undefined"!=typeof CanvasRenderingContext2D}function n(){var a=!1,b=navigator.userAgent;return/android/i.test(b)&&(a=!0,aMat=b.toString().match(/android ([0-9]\.[0-9])/i),aMat&&aMat[1]&&(a=parseFloat(aMat[1]))),a}function r(a,b){for(var c=1,e=s(a),f=0,g=l.length;g>=f;f++){var h=0;switch(b){case d.L:h=l[f][0];break;case d.M:h=l[f][1];break;case d.Q:h=l[f][2];break;case d.H:h=l[f][3]}if(h>=e)break;c++}if(c>l.length)throw new Error("Too long data");return c}function s(a){var b=encodeURI(a).toString().replace(/\%[0-9a-fA-F]{2}/g,"a");return b.length+(b.length!=a?3:0)}a.prototype={getLength:function(){return this.parsedData.length},write:function(a){for(var b=0,c=this.parsedData.length;c>b;b++)a.put(this.parsedData[b],8)}},b.prototype={addData:function(b){var c=new a(b);this.dataList.push(c),this.dataCache=null},isDark:function(a,b){if(0>a||this.moduleCount<=a||0>b||this.moduleCount<=b)throw new Error(a+","+b);return this.modules[a][b]},getModuleCount:function(){return this.moduleCount},make:function(){this.makeImpl(!1,this.getBestMaskPattern())},makeImpl:function(a,c){this.moduleCount=4*this.typeNumber+17,this.modules=new Array(this.moduleCount);for(var d=0;d<this.moduleCount;d++){this.modules[d]=new Array(this.moduleCount);for(var e=0;e<this.moduleCount;e++)this.modules[d][e]=null}this.setupPositionProbePattern(0,0),this.setupPositionProbePattern(this.moduleCount-7,0),this.setupPositionProbePattern(0,this.moduleCount-7),this.setupPositionAdjustPattern(),this.setupTimingPattern(),this.setupTypeInfo(a,c),this.typeNumber>=7&&this.setupTypeNumber(a),null==this.dataCache&&(this.dataCache=b.createData(this.typeNumber,this.errorCorrectLevel,this.dataList)),this.mapData(this.dataCache,c)},setupPositionProbePattern:function(a,b){for(var c=-1;7>=c;c++)if(!(-1>=a+c||this.moduleCount<=a+c))for(var d=-1;7>=d;d++)-1>=b+d||this.moduleCount<=b+d||(this.modules[a+c][b+d]=c>=0&&6>=c&&(0==d||6==d)||d>=0&&6>=d&&(0==c||6==c)||c>=2&&4>=c&&d>=2&&4>=d?!0:!1)},getBestMaskPattern:function(){for(var a=0,b=0,c=0;8>c;c++){this.makeImpl(!0,c);var d=f.getLostPoint(this);(0==c||a>d)&&(a=d,b=c)}return b},createMovieClip:function(a,b,c){var d=a.createEmptyMovieClip(b,c),e=1;this.make();for(var f=0;f<this.modules.length;f++)for(var g=f*e,h=0;h<this.modules[f].length;h++){var i=h*e,j=this.modules[f][h];j&&(d.beginFill(0,100),d.moveTo(i,g),d.lineTo(i+e,g),d.lineTo(i+e,g+e),d.lineTo(i,g+e),d.endFill())}return d},setupTimingPattern:function(){for(var a=8;a<this.moduleCount-8;a++)null==this.modules[a][6]&&(this.modules[a][6]=0==a%2);for(var b=8;b<this.moduleCount-8;b++)null==this.modules[6][b]&&(this.modules[6][b]=0==b%2)},setupPositionAdjustPattern:function(){for(var a=f.getPatternPosition(this.typeNumber),b=0;b<a.length;b++)for(var c=0;c<a.length;c++){var d=a[b],e=a[c];if(null==this.modules[d][e])for(var g=-2;2>=g;g++)for(var h=-2;2>=h;h++)this.modules[d+g][e+h]=-2==g||2==g||-2==h||2==h||0==g&&0==h?!0:!1}},setupTypeNumber:function(a){for(var b=f.getBCHTypeNumber(this.typeNumber),c=0;18>c;c++){var d=!a&&1==(1&b>>c);this.modules[Math.floor(c/3)][c%3+this.moduleCount-8-3]=d}for(var c=0;18>c;c++){var d=!a&&1==(1&b>>c);this.modules[c%3+this.moduleCount-8-3][Math.floor(c/3)]=d}},setupTypeInfo:function(a,b){for(var c=this.errorCorrectLevel<<3|b,d=f.getBCHTypeInfo(c),e=0;15>e;e++){var g=!a&&1==(1&d>>e);6>e?this.modules[e][8]=g:8>e?this.modules[e+1][8]=g:this.modules[this.moduleCount-15+e][8]=g}for(var e=0;15>e;e++){var g=!a&&1==(1&d>>e);8>e?this.modules[8][this.moduleCount-e-1]=g:9>e?this.modules[8][15-e-1+1]=g:this.modules[8][15-e-1]=g}this.modules[this.moduleCount-8][8]=!a},mapData:function(a,b){for(var c=-1,d=this.moduleCount-1,e=7,g=0,h=this.moduleCount-1;h>0;h-=2)for(6==h&&h--;;){for(var i=0;2>i;i++)if(null==this.modules[d][h-i]){var j=!1;g<a.length&&(j=1==(1&a[g]>>>e));var k=f.getMask(b,d,h-i);k&&(j=!j),this.modules[d][h-i]=j,e--,-1==e&&(g++,e=7)}if(d+=c,0>d||this.moduleCount<=d){d-=c,c=-c;break}}}},b.PAD0=236,b.PAD1=17,b.createData=function(a,c,d){for(var e=j.getRSBlocks(a,c),g=new k,h=0;h<d.length;h++){var i=d[h];g.put(i.mode,4),g.put(i.getLength(),f.getLengthInBits(i.mode,a)),i.write(g)}for(var l=0,h=0;h<e.length;h++)l+=e[h].dataCount;if(g.getLengthInBits()>8*l)throw new Error("code length overflow. ("+g.getLengthInBits()+">"+8*l+")");for(g.getLengthInBits()+4<=8*l&&g.put(0,4);0!=g.getLengthInBits()%8;)g.putBit(!1);for(;;){if(g.getLengthInBits()>=8*l)break;if(g.put(b.PAD0,8),g.getLengthInBits()>=8*l)break;g.put(b.PAD1,8)}return b.createBytes(g,e)},b.createBytes=function(a,b){for(var c=0,d=0,e=0,g=new Array(b.length),h=new Array(b.length),j=0;j<b.length;j++){var k=b[j].dataCount,l=b[j].totalCount-k;d=Math.max(d,k),e=Math.max(e,l),g[j]=new Array(k);for(var m=0;m<g[j].length;m++)g[j][m]=255&a.buffer[m+c];c+=k;var n=f.getErrorCorrectPolynomial(l),o=new i(g[j],n.getLength()-1),p=o.mod(n);h[j]=new Array(n.getLength()-1);for(var m=0;m<h[j].length;m++){var q=m+p.getLength()-h[j].length;h[j][m]=q>=0?p.get(q):0}}for(var r=0,m=0;m<b.length;m++)r+=b[m].totalCount;for(var s=new Array(r),t=0,m=0;d>m;m++)for(var j=0;j<b.length;j++)m<g[j].length&&(s[t++]=g[j][m]);for(var m=0;e>m;m++)for(var j=0;j<b.length;j++)m<h[j].length&&(s[t++]=h[j][m]);return s};for(var c={MODE_NUMBER:1,MODE_ALPHA_NUM:2,MODE_8BIT_BYTE:4,MODE_KANJI:8},d={L:1,M:0,Q:3,H:2},e={PATTERN000:0,PATTERN001:1,PATTERN010:2,PATTERN011:3,PATTERN100:4,PATTERN101:5,PATTERN110:6,PATTERN111:7},f={PATTERN_POSITION_TABLE:[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],G15:1335,G18:7973,G15_MASK:21522,getBCHTypeInfo:function(a){for(var b=a<<10;f.getBCHDigit(b)-f.getBCHDigit(f.G15)>=0;)b^=f.G15<<f.getBCHDigit(b)-f.getBCHDigit(f.G15);return(a<<10|b)^f.G15_MASK},getBCHTypeNumber:function(a){for(var b=a<<12;f.getBCHDigit(b)-f.getBCHDigit(f.G18)>=0;)b^=f.G18<<f.getBCHDigit(b)-f.getBCHDigit(f.G18);return a<<12|b},getBCHDigit:function(a){for(var b=0;0!=a;)b++,a>>>=1;return b},getPatternPosition:function(a){return f.PATTERN_POSITION_TABLE[a-1]},getMask:function(a,b,c){switch(a){case e.PATTERN000:return 0==(b+c)%2;case e.PATTERN001:return 0==b%2;case e.PATTERN010:return 0==c%3;case e.PATTERN011:return 0==(b+c)%3;case e.PATTERN100:return 0==(Math.floor(b/2)+Math.floor(c/3))%2;case e.PATTERN101:return 0==b*c%2+b*c%3;case e.PATTERN110:return 0==(b*c%2+b*c%3)%2;case e.PATTERN111:return 0==(b*c%3+(b+c)%2)%2;default:throw new Error("bad maskPattern:"+a)}},getErrorCorrectPolynomial:function(a){for(var b=new i([1],0),c=0;a>c;c++)b=b.multiply(new i([1,g.gexp(c)],0));return b},getLengthInBits:function(a,b){if(b>=1&&10>b)switch(a){case c.MODE_NUMBER:return 10;case c.MODE_ALPHA_NUM:return 9;case c.MODE_8BIT_BYTE:return 8;case c.MODE_KANJI:return 8;default:throw new Error("mode:"+a)}else if(27>b)switch(a){case c.MODE_NUMBER:return 12;case c.MODE_ALPHA_NUM:return 11;case c.MODE_8BIT_BYTE:return 16;case c.MODE_KANJI:return 10;default:throw new Error("mode:"+a)}else{if(!(41>b))throw new Error("type:"+b);switch(a){case c.MODE_NUMBER:return 14;case c.MODE_ALPHA_NUM:return 13;case c.MODE_8BIT_BYTE:return 16;case c.MODE_KANJI:return 12;default:throw new Error("mode:"+a)}}},getLostPoint:function(a){for(var b=a.getModuleCount(),c=0,d=0;b>d;d++)for(var e=0;b>e;e++){for(var f=0,g=a.isDark(d,e),h=-1;1>=h;h++)if(!(0>d+h||d+h>=b))for(var i=-1;1>=i;i++)0>e+i||e+i>=b||(0!=h||0!=i)&&g==a.isDark(d+h,e+i)&&f++;f>5&&(c+=3+f-5)}for(var d=0;b-1>d;d++)for(var e=0;b-1>e;e++){var j=0;a.isDark(d,e)&&j++,a.isDark(d+1,e)&&j++,a.isDark(d,e+1)&&j++,a.isDark(d+1,e+1)&&j++,(0==j||4==j)&&(c+=3)}for(var d=0;b>d;d++)for(var e=0;b-6>e;e++)a.isDark(d,e)&&!a.isDark(d,e+1)&&a.isDark(d,e+2)&&a.isDark(d,e+3)&&a.isDark(d,e+4)&&!a.isDark(d,e+5)&&a.isDark(d,e+6)&&(c+=40);for(var e=0;b>e;e++)for(var d=0;b-6>d;d++)a.isDark(d,e)&&!a.isDark(d+1,e)&&a.isDark(d+2,e)&&a.isDark(d+3,e)&&a.isDark(d+4,e)&&!a.isDark(d+5,e)&&a.isDark(d+6,e)&&(c+=40);for(var k=0,e=0;b>e;e++)for(var d=0;b>d;d++)a.isDark(d,e)&&k++;var l=Math.abs(100*k/b/b-50)/5;return c+=10*l}},g={glog:function(a){if(1>a)throw new Error("glog("+a+")");return g.LOG_TABLE[a]},gexp:function(a){for(;0>a;)a+=255;for(;a>=256;)a-=255;return g.EXP_TABLE[a]},EXP_TABLE:new Array(256),LOG_TABLE:new Array(256)},h=0;8>h;h++)g.EXP_TABLE[h]=1<<h;for(var h=8;256>h;h++)g.EXP_TABLE[h]=g.EXP_TABLE[h-4]^g.EXP_TABLE[h-5]^g.EXP_TABLE[h-6]^g.EXP_TABLE[h-8];for(var h=0;255>h;h++)g.LOG_TABLE[g.EXP_TABLE[h]]=h;i.prototype={get:function(a){return this.num[a]},getLength:function(){return this.num.length},multiply:function(a){for(var b=new Array(this.getLength()+a.getLength()-1),c=0;c<this.getLength();c++)for(var d=0;d<a.getLength();d++)b[c+d]^=g.gexp(g.glog(this.get(c))+g.glog(a.get(d)));return new i(b,0)},mod:function(a){if(this.getLength()-a.getLength()<0)return this;for(var b=g.glog(this.get(0))-g.glog(a.get(0)),c=new Array(this.getLength()),d=0;d<this.getLength();d++)c[d]=this.get(d);for(var d=0;d<a.getLength();d++)c[d]^=g.gexp(g.glog(a.get(d))+b);return new i(c,0).mod(a)}},j.RS_BLOCK_TABLE=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],j.getRSBlocks=function(a,b){var c=j.getRsBlockTable(a,b);if(void 0==c)throw new Error("bad rs block @ typeNumber:"+a+"/errorCorrectLevel:"+b);for(var d=c.length/3,e=[],f=0;d>f;f++)for(var g=c[3*f+0],h=c[3*f+1],i=c[3*f+2],k=0;g>k;k++)e.push(new j(h,i));return e},j.getRsBlockTable=function(a,b){switch(b){case d.L:return j.RS_BLOCK_TABLE[4*(a-1)+0];case d.M:return j.RS_BLOCK_TABLE[4*(a-1)+1];case d.Q:return j.RS_BLOCK_TABLE[4*(a-1)+2];case d.H:return j.RS_BLOCK_TABLE[4*(a-1)+3];default:return void 0}},k.prototype={get:function(a){var b=Math.floor(a/8);return 1==(1&this.buffer[b]>>>7-a%8)},put:function(a,b){for(var c=0;b>c;c++)this.putBit(1==(1&a>>>b-c-1))},getLengthInBits:function(){return this.length},putBit:function(a){var b=Math.floor(this.length/8);this.buffer.length<=b&&this.buffer.push(0),a&&(this.buffer[b]|=128>>>this.length%8),this.length++}};var l=[[17,14,11,7],[32,26,20,14],[53,42,32,24],[78,62,46,34],[106,84,60,44],[134,106,74,58],[154,122,86,64],[192,152,108,84],[230,180,130,98],[271,213,151,119],[321,251,177,137],[367,287,203,155],[425,331,241,177],[458,362,258,194],[520,412,292,220],[586,450,322,250],[644,504,364,280],[718,560,394,310],[792,624,442,338],[858,666,482,382],[929,711,509,403],[1003,779,565,439],[1091,857,611,461],[1171,911,661,511],[1273,997,715,535],[1367,1059,751,593],[1465,1125,805,625],[1528,1190,868,658],[1628,1264,908,698],[1732,1370,982,742],[1840,1452,1030,790],[1952,1538,1112,842],[2068,1628,1168,898],[2188,1722,1228,958],[2303,1809,1283,983],[2431,1911,1351,1051],[2563,1989,1423,1093],[2699,2099,1499,1139],[2809,2213,1579,1219],[2953,2331,1663,1273]],o=function(){var a=function(a,b){this._el=a,this._htOption=b};return a.prototype.draw=function(a){function g(a,b){var c=document.createElementNS("http://www.w3.org/2000/svg",a);for(var d in b)b.hasOwnProperty(d)&&c.setAttribute(d,b[d]);return c}var b=this._htOption,c=this._el,d=a.getModuleCount();Math.floor(b.width/d),Math.floor(b.height/d),this.clear();var h=g("svg",{viewBox:"0 0 "+String(d)+" "+String(d),width:"100%",height:"100%",fill:b.colorLight});h.setAttributeNS("http://www.w3.org/2000/xmlns/","xmlns:xlink","http://www.w3.org/1999/xlink"),c.appendChild(h),h.appendChild(g("rect",{fill:b.colorDark,width:"1",height:"1",id:"template"}));for(var i=0;d>i;i++)for(var j=0;d>j;j++)if(a.isDark(i,j)){var k=g("use",{x:String(i),y:String(j)});k.setAttributeNS("http://www.w3.org/1999/xlink","href","#template"),h.appendChild(k)}},a.prototype.clear=function(){for(;this._el.hasChildNodes();)this._el.removeChild(this._el.lastChild)},a}(),p="svg"===document.documentElement.tagName.toLowerCase(),q=p?o:m()?function(){function a(){this._elImage.src=this._elCanvas.toDataURL("image/png"),this._elImage.style.display="block",this._elCanvas.style.display="none"}function d(a,b){var c=this;if(c._fFail=b,c._fSuccess=a,null===c._bSupportDataURI){var d=document.createElement("img"),e=function(){c._bSupportDataURI=!1,c._fFail&&_fFail.call(c)},f=function(){c._bSupportDataURI=!0,c._fSuccess&&c._fSuccess.call(c)};return d.onabort=e,d.onerror=e,d.onload=f,d.src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",void 0}c._bSupportDataURI===!0&&c._fSuccess?c._fSuccess.call(c):c._bSupportDataURI===!1&&c._fFail&&c._fFail.call(c)}if(this._android&&this._android<=2.1){var b=1/window.devicePixelRatio,c=CanvasRenderingContext2D.prototype.drawImage;CanvasRenderingContext2D.prototype.drawImage=function(a,d,e,f,g,h,i,j){if("nodeName"in a&&/img/i.test(a.nodeName))for(var l=arguments.length-1;l>=1;l--)arguments[l]=arguments[l]*b;else"undefined"==typeof j&&(arguments[1]*=b,arguments[2]*=b,arguments[3]*=b,arguments[4]*=b);c.apply(this,arguments)}}var e=function(a,b){this._bIsPainted=!1,this._android=n(),this._htOption=b,this._elCanvas=document.createElement("canvas"),this._elCanvas.width=b.width,this._elCanvas.height=b.height,a.appendChild(this._elCanvas),this._el=a,this._oContext=this._elCanvas.getContext("2d"),this._bIsPainted=!1,this._elImage=document.createElement("img"),this._elImage.style.display="none",this._el.appendChild(this._elImage),this._bSupportDataURI=null};return e.prototype.draw=function(a){var b=this._elImage,c=this._oContext,d=this._htOption,e=a.getModuleCount(),f=d.width/e,g=d.height/e,h=Math.round(f),i=Math.round(g);b.style.display="none",this.clear();for(var j=0;e>j;j++)for(var k=0;e>k;k++){var l=a.isDark(j,k),m=k*f,n=j*g;c.strokeStyle=l?d.colorDark:d.colorLight,c.lineWidth=1,c.fillStyle=l?d.colorDark:d.colorLight,c.fillRect(m,n,f,g),c.strokeRect(Math.floor(m)+.5,Math.floor(n)+.5,h,i),c.strokeRect(Math.ceil(m)-.5,Math.ceil(n)-.5,h,i)}this._bIsPainted=!0},e.prototype.makeImage=function(){this._bIsPainted&&d.call(this,a)},e.prototype.isPainted=function(){return this._bIsPainted},e.prototype.clear=function(){this._oContext.clearRect(0,0,this._elCanvas.width,this._elCanvas.height),this._bIsPainted=!1},e.prototype.round=function(a){return a?Math.floor(1e3*a)/1e3:a},e}():function(){var a=function(a,b){this._el=a,this._htOption=b};return a.prototype.draw=function(a){for(var b=this._htOption,c=this._el,d=a.getModuleCount(),e=Math.floor(b.width/d),f=Math.floor(b.height/d),g=['<table style="border:0;border-collapse:collapse;">'],h=0;d>h;h++){g.push("<tr>");for(var i=0;d>i;i++)g.push('<td style="border:0;border-collapse:collapse;padding:0;margin:0;width:'+e+"px;height:"+f+"px;background-color:"+(a.isDark(h,i)?b.colorDark:b.colorLight)+';"></td>');g.push("</tr>")}g.push("</table>"),c.innerHTML=g.join("");var j=c.childNodes[0],k=(b.width-j.offsetWidth)/2,l=(b.height-j.offsetHeight)/2;k>0&&l>0&&(j.style.margin=l+"px "+k+"px")},a.prototype.clear=function(){this._el.innerHTML=""},a}();QRCode=function(a,b){if(this._htOption={width:256,height:256,typeNumber:4,colorDark:"#000000",colorLight:"#ffffff",correctLevel:d.H},"string"==typeof b&&(b={text:b}),b)for(var c in b)this._htOption[c]=b[c];"string"==typeof a&&(a=document.getElementById(a)),this._android=n(),this._el=a,this._oQRCode=null,this._oDrawing=new q(this._el,this._htOption),this._htOption.text&&this.makeCode(this._htOption.text)},QRCode.prototype.makeCode=function(a){this._oQRCode=new b(r(a,this._htOption.correctLevel),this._htOption.correctLevel),this._oQRCode.addData(a),this._oQRCode.make(),this._el.title=a,this._oDrawing.draw(this._oQRCode),this.makeImage()},QRCode.prototype.makeImage=function(){"function"==typeof this._oDrawing.makeImage&&(!this._android||this._android>=3)&&this._oDrawing.makeImage()},QRCode.prototype.clear=function(){this._oDrawing.clear()},QRCode.CorrectLevel=d}();
     </script>
 
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
+        }
         .container { max-width: 900px; margin: 0 auto; }
         h1 { text-align: center; color: #2c3e50; margin-bottom: 20px; }
-
-        .search-box { width: 100%; padding: 12px 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; margin-bottom: 20px; }
+        .search-box {
+            width: 100%; padding: 12px 15px; border: 2px solid #ddd;
+            border-radius: 8px; font-size: 16px; margin-bottom: 20px;
+        }
         .search-box:focus { outline: none; border-color: #3498db; }
-
         .category { margin-bottom: 15px; }
-        .category h3 { padding: 10px 15px; color: white; border-radius: 6px 6px 0 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; gap: 8px; }
+        .category h3 {
+            padding: 10px 15px; color: white; border-radius: 6px 6px 0 0;
+            cursor: pointer; display: flex; justify-content: space-between;
+            align-items: center; user-select: none; gap: 8px;
+        }
         .category h3 .cat-label { flex: 1; }
         .category h3 .arrow { font-size: 12px; transition: transform 0.2s; flex-shrink: 0; }
         .category h3 .arrow.collapsed { transform: rotate(-90deg); }
@@ -31,77 +39,110 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
         .cat-hip h3 { background: #f39c12; }
         .cat-neck h3 { background: #1abc9c; }
         .cat-ankle h3 { background: #e67e22; }
-
-        .exercise-list { border: 1px solid #ddd; border-top: none; border-radius: 0 0 6px 6px; background: white; overflow: hidden; }
-        .exercise-item { display: flex; align-items: center; padding: 10px 15px; border-bottom: 1px solid #eee; gap: 10px; }
+        .exercise-list {
+            border: 1px solid #ddd; border-top: none;
+            border-radius: 0 0 6px 6px; background: white; overflow: hidden;
+        }
+        .exercise-item {
+            display: flex; align-items: center; padding: 10px 15px;
+            border-bottom: 1px solid #eee; gap: 10px;
+        }
         .exercise-item:last-child { border-bottom: none; }
         .exercise-item:hover { background: #f8f9fa; }
-        .exercise-item input[type="checkbox"] { margin-right: 2px; transform: scale(1.3); cursor: pointer; flex-shrink: 0; }
-        .exercise-item label { flex: 1; cursor: pointer; display: flex; align-items: center; gap: 10px; }
-        .exercise-item .code { color: #999; font-family: monospace; font-size: 12px; flex-shrink: 0; }
-
-        /* ── Subcategory headers (scoliosis) ── */
+        .exercise-item input[type="checkbox"] {
+            margin-right: 2px; transform: scale(1.3); cursor: pointer; flex-shrink: 0;
+        }
+        .exercise-item label {
+            flex: 1; cursor: pointer; display: flex; align-items: center; gap: 10px;
+        }
+        .exercise-item .code {
+            color: #999; font-family: monospace; font-size: 12px; flex-shrink: 0;
+        }
         .subcat-header {
-            padding: 9px 15px 9px 20px; background: linear-gradient(to right, #e8f4fd, #f5f9fd);
+            padding: 9px 15px 9px 20px;
+            background: linear-gradient(to right, #e8f4fd, #f5f9fd);
             color: #2471a3; font-weight: 600; font-size: 13px; cursor: pointer;
-            border-bottom: 1px solid #d4e6f1; display: flex; align-items: center; gap: 8px; user-select: none;
+            border-bottom: 1px solid #d4e6f1; display: flex;
+            align-items: center; gap: 8px; user-select: none;
         }
         .subcat-header:hover { background: linear-gradient(to right, #d4e6f1, #eaf2f8); }
-        .subcat-arrow { font-size: 10px; display: inline-block; transition: transform 0.15s; }
+        .subcat-arrow {
+            font-size: 10px; display: inline-block; transition: transform 0.15s;
+        }
         .subcat-label { flex: 1; }
         .subcat-exercises { border-bottom: 2px solid #d4e6f1; }
-
-        /* ── Select All buttons ── */
         .select-all-btn {
             font-size: 11px; padding: 3px 10px; border-radius: 4px;
-            border: 1px solid rgba(255,255,255,0.5); background: rgba(255,255,255,0.25);
-            color: white; cursor: pointer; white-space: nowrap; font-weight: 600;
-            flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.25);
+            color: white; cursor: pointer; white-space: nowrap;
+            font-weight: 600; flex-shrink: 0;
         }
         .select-all-btn:hover { background: rgba(255,255,255,0.45); }
         .subcat-select-all {
             font-size: 10px; padding: 2px 8px; border-radius: 4px;
             border: 1px solid #a9cce3; background: white; color: #2471a3;
-            cursor: pointer; white-space: nowrap; font-weight: 600;
-            flex-shrink: 0;
+            cursor: pointer; white-space: nowrap; font-weight: 600; flex-shrink: 0;
         }
         .subcat-select-all:hover { background: #d6eaf8; }
-
-        /* ── Unit badges ── */
-        .unit-badge { font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+        .unit-badge {
+            font-size: 10px; padding: 2px 7px; border-radius: 10px;
+            font-weight: 600; white-space: nowrap; flex-shrink: 0;
+        }
         .ub-breathing { background: #e8f8f5; color: #148f77; }
         .ub-reps { background: #fef9e7; color: #b7950b; }
         .ub-minutes { background: #f4ecf7; color: #7d3c98; }
         .ub-secssets { background: #ebf5fb; color: #2471a3; }
-
-        .card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .card {
+            background: white; border-radius: 8px; padding: 20px;
+            margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
         .card h2 { margin-bottom: 15px; color: #34495e; }
-
-        .selected-exercise { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid #eee; flex-wrap: wrap; }
+        .selected-exercise {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 0; border-bottom: 1px solid #eee; flex-wrap: wrap;
+        }
         .selected-exercise .name { flex: 1; min-width: 180px; font-weight: 600; }
         .selected-exercise label { font-size: 13px; color: #555; }
-        .selected-exercise input[type="number"] { width: 55px; padding: 5px; border: 1px solid #ccc; border-radius: 4px; }
-        .selected-exercise select { padding: 5px; border: 1px solid #ccc; border-radius: 4px; }
-        .remove-btn { background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
-
+        .selected-exercise input[type="number"] {
+            width: 55px; padding: 5px; border: 1px solid #ccc; border-radius: 4px;
+        }
+        .selected-exercise select {
+            padding: 5px; border: 1px solid #ccc; border-radius: 4px;
+        }
+        .remove-btn {
+            background: #e74c3c; color: white; border: none;
+            padding: 5px 10px; border-radius: 4px; cursor: pointer;
+        }
         .btn-row { display: flex; gap: 10px; margin-bottom: 20px; }
-        .generate-btn { flex: 1; padding: 15px; background: #27ae60; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; }
+        .generate-btn {
+            flex: 1; padding: 15px; background: #27ae60; color: white;
+            border: none; border-radius: 8px; font-size: 18px; cursor: pointer;
+        }
         .generate-btn:hover { background: #219a52; }
         .generate-btn:disabled { background: #95a5a6; cursor: not-allowed; }
-        .reset-btn { padding: 15px 30px; background: #e74c3c; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; }
+        .reset-btn {
+            padding: 15px 30px; background: #e74c3c; color: white;
+            border: none; border-radius: 8px; font-size: 18px; cursor: pointer;
+        }
         .reset-btn:hover { background: #c0392b; }
-
         .output { text-align: center; display: none; }
         #qrcode { display: inline-block; margin: 20px auto; }
         #qrcode img { display: block; }
-        .url-box { background: #f8f9fa; padding: 12px; border-radius: 6px; word-break: break-all; font-family: monospace; font-size: 13px; margin: 15px 0; text-align: left; }
-
-        .action-btn { padding: 10px 25px; color: white; border: none; border-radius: 6px; font-size: 15px; cursor: pointer; margin: 5px; }
+        .url-box {
+            background: #f8f9fa; padding: 12px; border-radius: 6px;
+            word-break: break-all; font-family: monospace;
+            font-size: 13px; margin: 15px 0; text-align: left;
+        }
+        .action-btn {
+            padding: 10px 25px; color: white; border: none;
+            border-radius: 6px; font-size: 15px; cursor: pointer; margin: 5px;
+        }
         .btn-copy { background: #8e44ad; }
         .btn-print { background: #3498db; }
-
-        .empty-msg { color: #999; font-style: italic; padding: 15px; text-align: center; }
-
+        .empty-msg {
+            color: #999; font-style: italic; padding: 15px; text-align: center;
+        }
         @media print {
             .no-print { display: none !important; }
             .output { display: block !important; box-shadow: none; }
@@ -113,7 +154,8 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
 <div class="container">
     <h1>Exercise Plan Generator</h1>
 
-    <input type="text" class="search-box no-print" id="searchBox" placeholder="Search exercises (e.g. plank, sc08, chest...)">
+    <input type="text" class="search-box no-print" id="searchBox"
+           placeholder="Search exercises (e.g. plank, sc08, chest...)">
 
     <div id="categories" class="no-print"></div>
 
@@ -140,169 +182,201 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
 </div>
 
 <script>
-/* ===========================================
-   CONFIGURATION
-   =========================================== */
-var BASE_URL = 'https://pwhphysio.github.io/eps';
+var BASE_URL = "https://pwhphysio.github.io/eps";
 
-/* ===========================================
-   EXERCISE DATABASE
-   =========================================== */
 var EXERCISES = {
     scoliosis: {
-        label: 'Scoliosis',
+        label: "Scoliosis",
         hasSubcats: true,
         subcats: {
-            'psse-thoracic': {
-                label: 'PSSE - Thoracic',
+            "psse-thoracic": {
+                label: "PSSE - Thoracic",
                 exercises: {
-                    sc01: { name: 'Side-bending in Sitting (A)', unit: 'reps' },
-                    sc02: { name: 'Side-bending in Sitting with towel under hip (B)', unit: 'reps' },
-                    sc03: { name: 'Derotation - Fixed Pelvis', unit: 'reps' },
-                    sc04: { name: 'Derotation - Fixed Shoulder', unit: 'reps' },
-                    sc05: { name: 'Stretching the Weak Side', unit: 'minutes' },
-                    sc06: { name: 'Between 2 Poles (Standing)', unit: 'breathing' },
-                    sc07: { name: 'Between 2 Poles (Sitting)', unit: 'breathing' },
-                    sc08: { name: 'Chest Twister', unit: 'breathing' },
-                    sc09: { name: 'Shoulder Counter Traction (Side-Position)', unit: 'breathing' },
-                    sc10: { name: 'Shoulder Counter Traction (Elastic Band)', unit: 'breathing' },
-                    sc11: { name: 'Sideways Hang in kneeling', unit: 'breathing' },
-                    sc12: { name: 'Sideways Hang in sitting', unit: 'breathing' }
+                    sc01: { name: "Side-bending in Sitting (A)", unit: "reps" },
+                    sc02: { name: "Side-bending in Sitting with towel under hip (B)", unit: "reps" },
+                    sc03: { name: "Derotation - Fixed Pelvis", unit: "reps" },
+                    sc04: { name: "Derotation - Fixed Shoulder", unit: "reps" },
+                    sc05: { name: "Stretching the Weak Side", unit: "minutes" },
+                    sc06: { name: "Between 2 Poles (Standing)", unit: "breathing" },
+                    sc07: { name: "Between 2 Poles (Sitting)", unit: "breathing" },
+                    sc08: { name: "Chest Twister", unit: "breathing" },
+                    sc09: { name: "Shoulder Counter Traction (Side-Position)", unit: "breathing" },
+                    sc10: { name: "Shoulder Counter Traction (Elastic Band)", unit: "breathing" },
+                    sc11: { name: "Sideways Hang in kneeling", unit: "breathing" },
+                    sc12: { name: "Sideways Hang in sitting", unit: "breathing" }
                 }
             },
-            'psse-lumbar': {
-                label: 'PSSE - Lumbar',
+            "psse-lumbar": {
+                label: "PSSE - Lumbar",
                 exercises: {
-                    sc13: { name: 'Posterior Depression', unit: 'reps' },
-                    sc14: { name: 'Foot under a Bar (Sitting)', unit: 'breathing' },
-                    sc15: { name: 'Foot under a Bar (Standing)', unit: 'breathing' },
-                    sc16: { name: 'Pelvic Tilt - Left Lumbar Curve', unit: 'breathing' },
-                    sc17: { name: 'Kneeling on One Knee', unit: 'breathing' },
-                    sc18: { name: 'Muscle Cylinder (Side-Position)', unit: 'breathing' },
-                    sc19: { name: 'Muscle Cylinder (Standing)', unit: 'breathing' },
-                    sc20: { name: 'Prominent Hip Exercises', unit: 'breathing' }
+                    sc13: { name: "Posterior Depression", unit: "reps" },
+                    sc14: { name: "Foot under a Bar (Sitting)", unit: "breathing" },
+                    sc15: { name: "Foot under a Bar (Standing)", unit: "breathing" },
+                    sc16: { name: "Pelvic Tilt - Left Lumbar Curve", unit: "breathing" },
+                    sc17: { name: "Kneeling on One Knee", unit: "breathing" },
+                    sc18: { name: "Muscle Cylinder (Side-Position)", unit: "breathing" },
+                    sc19: { name: "Muscle Cylinder (Standing)", unit: "breathing" },
+                    sc20: { name: "Prominent Hip Exercises", unit: "breathing" }
                 }
             },
-            'psse-double': {
-                label: 'PSSE - Double Curve',
+            "psse-double": {
+                label: "PSSE - Double Curve",
                 exercises: {
-                    sc21: { name: 'Shoulder Counter Traction + Muscle Cylinder in side-lying', unit: 'breathing' },
-                    sc22: { name: 'Sail (Standing)', unit: 'breathing' },
-                    sc23: { name: 'Sail (Kneeling)', unit: 'breathing' }
+                    sc21: { name: "Shoulder Counter Traction + Muscle Cylinder in side-lying", unit: "breathing" },
+                    sc22: { name: "Sail (Standing)", unit: "breathing" },
+                    sc23: { name: "Sail (Kneeling)", unit: "breathing" }
                 }
             },
-            'relaxed-posture': {
-                label: 'Relaxed Posture',
+            "relaxed-posture": {
+                label: "Relaxed Posture",
                 exercises: {
-                    sc24: { name: 'Relaxed Posture (Tri)', unit: 'minutes' },
-                    sc25: { name: 'Relaxed Posture (Double)', unit: 'minutes' },
-                    sc26: { name: 'Relaxed Posture (Tle)', unit: 'minutes' }
+                    sc24: { name: "Relaxed Posture (Tri)", unit: "minutes" },
+                    sc25: { name: "Relaxed Posture (Double)", unit: "minutes" },
+                    sc26: { name: "Relaxed Posture (Tle)", unit: "minutes" }
                 }
             },
-            'gait': {
-                label: 'Gait',
+            "gait": {
+                label: "Gait",
                 exercises: {
-                    sc27: { name: 'Conscious Gait', unit: 'breathing' },
-                    sc28: { name: 'Schroth Gait', unit: 'breathing' }
+                    sc27: { name: "Conscious Gait", unit: "breathing" },
+                    sc28: { name: "Schroth Gait", unit: "breathing" }
                 }
             },
-            'sagittal': {
-                label: 'Sagittal Plane Correction',
+            "sagittal": {
+                label: "Sagittal Plane Correction",
                 exercises: {
-                    sc29: { name: 'Standing in a Doorway', unit: 'breathing' },
-                    sc30: { name: 'Kneeling between 2 Chairs', unit: 'breathing' },
-                    sc31: { name: 'Jelly Fish', unit: 'breathing' },
-                    sc32: { name: 'Swordfish', unit: 'breathing' }
+                    sc29: { name: "Standing in a Doorway", unit: "breathing" },
+                    sc30: { name: "Kneeling between 2 Chairs", unit: "breathing" },
+                    sc31: { name: "Jelly Fish", unit: "breathing" },
+                    sc32: { name: "Swordfish", unit: "breathing" }
                 }
             },
-            'strengthening': {
-                label: 'General - Strengthening',
+            "strengthening": {
+                label: "General - Strengthening",
                 exercises: {
-                    sc33: { name: 'Bird Dog', unit: 'seconds-sets' },
-                    sc34: { name: 'Plank', unit: 'seconds-sets' },
-                    sc35: { name: 'Side-Plank', unit: 'seconds-sets' },
-                    sc36: { name: 'Crunches / Sit-up', unit: 'seconds-sets' }
+                    sc33: { name: "Bird Dog", unit: "seconds-sets" },
+                    sc34: { name: "Plank", unit: "seconds-sets" },
+                    sc35: { name: "Side-Plank", unit: "seconds-sets" },
+                    sc36: { name: "Crunches / Sit-up", unit: "seconds-sets" }
                 }
             },
-            'stretching': {
-                label: 'General - Stretching',
+            "stretching": {
+                label: "General - Stretching",
                 exercises: {
-                    sc37: { name: 'Hamstrings Stretching in supine', unit: 'seconds-sets' },
-                    sc38: { name: 'Hamstrings Stretching in long sitting', unit: 'seconds-sets' },
-                    sc39: { name: 'Back Muscles Stretching', unit: 'seconds-sets' },
-                    sc40: { name: 'Gastrocnemius stretch', unit: 'seconds-sets' },
-                    sc41: { name: 'Soleus stretch', unit: 'seconds-sets' }
+                    sc37: { name: "Hamstrings Stretching in supine", unit: "seconds-sets" },
+                    sc38: { name: "Hamstrings Stretching in long sitting", unit: "seconds-sets" },
+                    sc39: { name: "Back Muscles Stretching", unit: "seconds-sets" },
+                    sc40: { name: "Gastrocnemius stretch", unit: "seconds-sets" },
+                    sc41: { name: "Soleus stretch", unit: "seconds-sets" }
                 }
             }
         }
     },
     knee: {
-        label: 'Knee', exercises: {
-            k01:'Quad Sets', k02:'Straight Leg Raise', k03:'Heel Slides',
-            k04:'Wall Squats', k05:'Step Ups', k06:'Terminal Knee Extension',
-            k07:'Hamstring Curls', k08:'Calf Raises', k09:'Single Leg Balance',
-            k10:'Lateral Step Downs'
+        label: "Knee",
+        exercises: {
+            k01: "Quad Sets",
+            k02: "Straight Leg Raise",
+            k03: "Heel Slides",
+            k04: "Wall Squats",
+            k05: "Step Ups",
+            k06: "Terminal Knee Extension",
+            k07: "Hamstring Curls",
+            k08: "Calf Raises",
+            k09: "Single Leg Balance",
+            k10: "Lateral Step Downs"
         }
     },
     shoulder: {
-        label: 'Shoulder', exercises: {
-            s01:'Pendulum Exercises', s02:'Wall Walks', s03:'External Rotation with Band',
-            s04:'Internal Rotation with Band', s05:'Scapular Squeezes',
-            s06:'Shoulder Flexion Stretch', s07:'Cross-body Stretch',
-            s08:'Sleeper Stretch', s09:'Prone Y Raise', s10:'Prone T Raise'
+        label: "Shoulder",
+        exercises: {
+            s01: "Pendulum Exercises",
+            s02: "Wall Walks",
+            s03: "External Rotation with Band",
+            s04: "Internal Rotation with Band",
+            s05: "Scapular Squeezes",
+            s06: "Shoulder Flexion Stretch",
+            s07: "Cross-body Stretch",
+            s08: "Sleeper Stretch",
+            s09: "Prone Y Raise",
+            s10: "Prone T Raise"
         }
     },
     back: {
-        label: 'Back', exercises: {
-            b01:'Cat-Cow Stretch', b02:'Bird Dog', b03:'Pelvic Tilts',
-            b04:'Bridges', b05:'Knee-to-Chest Stretch', b06:'Childs Pose',
-            b07:'Press Up (McKenzie)', b08:'Dead Bug', b09:'Side Plank',
-            b10:'Seated Lumbar Rotation'
+        label: "Back",
+        exercises: {
+            b01: "Cat-Cow Stretch",
+            b02: "Bird Dog",
+            b03: "Pelvic Tilts",
+            b04: "Bridges",
+            b05: "Knee-to-Chest Stretch",
+            b06: "Childs Pose",
+            b07: "Press Up (McKenzie)",
+            b08: "Dead Bug",
+            b09: "Side Plank",
+            b10: "Seated Lumbar Rotation"
         }
     },
     hip: {
-        label: 'Hip', exercises: {
-            h01:'Clamshells', h02:'Hip Flexor Stretch', h03:'Piriformis Stretch',
-            h04:'Side-lying Hip Abduction', h05:'Hip Bridges',
-            h06:'Standing Hip Extension', h07:'Fire Hydrants',
-            h08:'Figure-4 Stretch', h09:'Monster Walks', h10:'Single Leg Deadlift'
+        label: "Hip",
+        exercises: {
+            h01: "Clamshells",
+            h02: "Hip Flexor Stretch",
+            h03: "Piriformis Stretch",
+            h04: "Side-lying Hip Abduction",
+            h05: "Hip Bridges",
+            h06: "Standing Hip Extension",
+            h07: "Fire Hydrants",
+            h08: "Figure-4 Stretch",
+            h09: "Monster Walks",
+            h10: "Single Leg Deadlift"
         }
     },
     neck: {
-        label: 'Neck', exercises: {
-            n01:'Chin Tucks', n02:'Neck Flexion Stretch', n03:'Neck Side Bend',
-            n04:'Neck Rotation', n05:'Levator Scapulae Stretch',
-            n06:'Upper Trap Stretch', n07:'Isometric Neck Flexion',
-            n08:'Isometric Neck Extension', n09:'Thoracic Extension',
-            n10:'Scalene Stretch'
+        label: "Neck",
+        exercises: {
+            n01: "Chin Tucks",
+            n02: "Neck Flexion Stretch",
+            n03: "Neck Side Bend",
+            n04: "Neck Rotation",
+            n05: "Levator Scapulae Stretch",
+            n06: "Upper Trap Stretch",
+            n07: "Isometric Neck Flexion",
+            n08: "Isometric Neck Extension",
+            n09: "Thoracic Extension",
+            n10: "Scalene Stretch"
         }
     },
     ankle: {
-        label: 'Ankle', exercises: {
-            a01:'Ankle Pumps', a02:'Ankle Circles', a03:'Towel Stretch',
-            a04:'Calf Raises', a05:'Single Leg Balance',
-            a06:'Resistance Band Eversion', a07:'Resistance Band Inversion',
-            a08:'Heel Walks', a09:'Toe Walks', a10:'BOSU Ball Balance'
+        label: "Ankle",
+        exercises: {
+            a01: "Ankle Pumps",
+            a02: "Ankle Circles",
+            a03: "Towel Stretch",
+            a04: "Calf Raises",
+            a05: "Single Leg Balance",
+            a06: "Resistance Band Eversion",
+            a07: "Resistance Band Inversion",
+            a08: "Heel Walks",
+            a09: "Toe Walks",
+            a10: "BOSU Ball Balance"
         }
     }
 };
 
 var selected = {};
 
-/* ===========================================
-   HELPERS
-   =========================================== */
 function getExerciseInfo(code) {
     for (var cat in EXERCISES) {
         var c = EXERCISES[cat];
         if (c.hasSubcats) {
             for (var sc in c.subcats) {
                 var ex = c.subcats[sc].exercises[code];
-                if (ex) return { name: ex.name, unit: ex.unit || 'sets-reps', cat: cat, subcat: sc };
+                if (ex) return { name: ex.name, unit: ex.unit || "sets-reps", cat: cat, subcat: sc };
             }
         } else if (c.exercises && c.exercises[code]) {
-            var name = c.exercises[code];
-            return { name: name, unit: 'sets-reps', cat: cat };
+            var nm = c.exercises[code];
+            return { name: nm, unit: "sets-reps", cat: cat };
         }
     }
     return null;
@@ -310,76 +384,77 @@ function getExerciseInfo(code) {
 
 function getDefaults(unit) {
     switch (unit) {
-        case 'reps':         return { reps: 5 };
-        case 'breathing':    return { breathingCycles: 5 };
-        case 'minutes':      return { minutes: 10 };
-        case 'seconds-sets': return { sets: 3, seconds: 30 };
-        default:             return { sets: 3, reps: 10, hold: '' };
+        case "reps":         return { reps: 5 };
+        case "breathing":    return { breathingCycles: 5 };
+        case "minutes":      return { minutes: 10 };
+        case "seconds-sets": return { sets: 3, seconds: 30 };
+        default:             return { sets: 3, reps: 10, hold: "" };
     }
 }
 
 function unitBadgeHTML(unit) {
     var map = {
-        'breathing':    ['Breathing', 'ub-breathing'],
-        'reps':         ['Reps',      'ub-reps'],
-        'minutes':      ['Minutes',   'ub-minutes'],
-        'seconds-sets': ['Sec\u00D7Sets', 'ub-secssets']
+        "breathing":    ["Breathing", "ub-breathing"],
+        "reps":         ["Reps",      "ub-reps"],
+        "minutes":      ["Minutes",   "ub-minutes"],
+        "seconds-sets": ["Sec\u00D7Sets", "ub-secssets"]
     };
     var info = map[unit];
-    if (!info) return '';
-    return ' <span class="unit-badge ' + info[1] + '">' + info[0] + '</span>';
+    if (!info) return "";
+    return " <span class=\"unit-badge " + info[1] + "\">" + info[0] + "</span>";
 }
 
 function toggleSubcat(el) {
-    var wrapper = el.closest('.subcat-wrapper');
+    var wrapper = el.closest(".subcat-wrapper");
     if (!wrapper) return;
-    var list = wrapper.querySelector('.subcat-exercises');
-    var arrow = el.querySelector('.subcat-arrow');
+    var list = wrapper.querySelector(".subcat-exercises");
+    var arrow = el.querySelector(".subcat-arrow");
     if (!list) return;
-    var isHidden = list.style.display === 'none';
-    list.style.display = isHidden ? '' : 'none';
-    if (arrow) arrow.textContent = isHidden ? '\u25BC' : '\u25B6';
+    var isHidden = (list.style.display === "none");
+    list.style.display = isHidden ? "" : "none";
+    if (arrow) arrow.textContent = isHidden ? "\u25BC" : "\u25B6";
 }
 
 function toggleCategory(el) {
     var list = el.nextElementSibling;
-    var arrow = el.querySelector('.arrow');
+    var arrow = el.querySelector(".arrow");
     if (!list) return;
-    var isHidden = list.style.display === 'none';
-    list.style.display = isHidden ? '' : 'none';
+    var isHidden = (list.style.display === "none");
+    list.style.display = isHidden ? "" : "none";
     if (arrow) {
-        if (!isHidden) { arrow.textContent = '\u25B6'; arrow.classList.add('collapsed'); }
-        else { arrow.textContent = '\u25BC'; arrow.classList.remove('collapsed'); }
+        if (!isHidden) {
+            arrow.textContent = "\u25B6";
+            arrow.classList.add("collapsed");
+        } else {
+            arrow.textContent = "\u25BC";
+            arrow.classList.remove("collapsed");
+        }
     }
 }
 
-/* ===========================================
-   SELECT ALL / DESELECT ALL
-   =========================================== */
 function selectAllSubcat(subcatKey) {
     var c = EXERCISES.scoliosis;
     if (!c || !c.subcats || !c.subcats[subcatKey]) return;
     var exs = c.subcats[subcatKey].exercises;
     var codes = Object.keys(exs);
-
     var allSelected = true;
     for (var i = 0; i < codes.length; i++) {
         if (!selected[codes[i]]) { allSelected = false; break; }
     }
-
     for (var j = 0; j < codes.length; j++) {
-        var code = codes[j], ex = exs[code];
-        var cb = document.getElementById('cb_' + code);
+        var code = codes[j];
+        var ex = exs[code];
+        var cb = document.getElementById("cb_" + code);
         if (allSelected) {
             delete selected[code];
             if (cb) cb.checked = false;
         } else {
             if (!selected[code]) {
-                var unit = ex.unit || 'sets-reps';
+                var unit = ex.unit || "sets-reps";
                 var defs = getDefaults(unit);
                 defs.name = ex.name;
                 defs.unit = unit;
-                defs.freq = 'daily';
+                defs.freq = "daily";
                 selected[code] = defs;
             }
             if (cb) cb.checked = true;
@@ -392,24 +467,23 @@ function selectAllCat(catKey) {
     var c = EXERCISES[catKey];
     if (!c || !c.exercises) return;
     var codes = Object.keys(c.exercises);
-
     var allSelected = true;
     for (var i = 0; i < codes.length; i++) {
         if (!selected[codes[i]]) { allSelected = false; break; }
     }
-
     for (var j = 0; j < codes.length; j++) {
-        var code = codes[j], name = c.exercises[code];
-        var cb = document.getElementById('cb_' + code);
+        var code = codes[j];
+        var nm = c.exercises[code];
+        var cb = document.getElementById("cb_" + code);
         if (allSelected) {
             delete selected[code];
             if (cb) cb.checked = false;
         } else {
             if (!selected[code]) {
-                var defs = getDefaults('sets-reps');
-                defs.name = name;
-                defs.unit = 'sets-reps';
-                defs.freq = 'daily';
+                var defs = getDefaults("sets-reps");
+                defs.name = nm;
+                defs.unit = "sets-reps";
+                defs.freq = "daily";
                 selected[code] = defs;
             }
             if (cb) cb.checked = true;
@@ -418,95 +492,87 @@ function selectAllCat(catKey) {
     refresh();
 }
 
-/* ===========================================
-   RESET
-   =========================================== */
 function resetAll() {
     selected = {};
-    var cbs = document.querySelectorAll('.exercise-item input[type="checkbox"]');
+    var cbs = document.querySelectorAll(".exercise-item input[type=\"checkbox\"]");
     for (var i = 0; i < cbs.length; i++) cbs[i].checked = false;
-    var outputEl = document.getElementById('output');
-    if (outputEl) outputEl.style.display = 'none';
-    var qrDiv = document.getElementById('qrcode');
-    if (qrDiv) qrDiv.innerHTML = '';
-    var urlBox = document.getElementById('urlBox');
-    if (urlBox) urlBox.textContent = '';
-    var searchBox = document.getElementById('searchBox');
-    if (searchBox) { searchBox.value = ''; searchBox.dispatchEvent(new Event('input')); }
+    var outputEl = document.getElementById("output");
+    if (outputEl) outputEl.style.display = "none";
+    var qrDiv = document.getElementById("qrcode");
+    if (qrDiv) qrDiv.innerHTML = "";
+    var urlBox = document.getElementById("urlBox");
+    if (urlBox) urlBox.textContent = "";
+    var searchBox = document.getElementById("searchBox");
+    if (searchBox) {
+        searchBox.value = "";
+        searchBox.dispatchEvent(new Event("input"));
+    }
     refresh();
 }
 
-/* ===========================================
-   BUILD THE EXERCISE PICKER UI
-   =========================================== */
 function buildUI() {
-    var catEl = document.getElementById('categories');
+    var catEl = document.getElementById("categories");
     if (!catEl) return;
-
-    var html = '';
+    var html = "";
     for (var cat in EXERCISES) {
         var c = EXERCISES[cat];
-        html += '<div class="category cat-' + cat + '">';
-
+        html += "<div class=\"category cat-" + cat + "\">";
         if (c.hasSubcats) {
-            html += '<h3 onclick="toggleCategory(this)"><span class="cat-label">' + c.label + ' Exercises</span> <span class="arrow">\u25BC</span></h3>';
-            html += '<div class="exercise-list">';
-
+            html += "<h3 onclick=\"toggleCategory(this)\"><span class=\"cat-label\">" + c.label + " Exercises</span> <span class=\"arrow\">\u25BC</span></h3>";
+            html += "<div class=\"exercise-list\">";
             for (var sc in c.subcats) {
                 var sub = c.subcats[sc];
-                html += '<div class="subcat-wrapper">';
-                html += '<div class="subcat-header">'
-                      + '<span class="subcat-arrow">\u25B6</span> '
-                      + '<span class="subcat-label" onclick="toggleSubcat(this.closest(\'.subcat-header\'))">' + sub.label + '</span>'
-                      + '<button class="subcat-select-all" data-selectall-subcat="' + sc + '">Select All</button>'
-                      + '</div>';
-                html += '<div class="subcat-exercises" style="display:none;">';
+                html += "<div class=\"subcat-wrapper\">";
+                html += "<div class=\"subcat-header\">";
+                html += "<span class=\"subcat-arrow\">\u25B6</span> ";
+                html += "<span class=\"subcat-label\" onclick=\"toggleSubcat(this.closest('.subcat-header'))\">" + sub.label + "</span>";
+                html += "<button class=\"subcat-select-all\" data-selectall-subcat=\"" + sc + "\">Select All</button>";
+                html += "</div>";
+                html += "<div class=\"subcat-exercises\" style=\"display:none;\">";
                 for (var code in sub.exercises) {
                     var ex = sub.exercises[code];
-                    var safeName = ex.name.replace(/'/g, '&#39;');
-                    html += '<div class="exercise-item" data-s="' + (ex.name + ' ' + code + ' ' + sub.label).toLowerCase() + '">';
-                    html += '<input type="checkbox" id="cb_' + code + '" data-code="' + code + '" data-name="' + safeName + '">';
-                    html += '<label for="cb_' + code + '">' + ex.name + unitBadgeHTML(ex.unit) + '</label>';
-                    html += '<span class="code">' + code + '</span>';
-                    html += '</div>';
+                    var safeName = ex.name.replace(/"/g, "&quot;");
+                    var searchStr = (ex.name + " " + code + " " + sub.label).toLowerCase();
+                    html += "<div class=\"exercise-item\" data-s=\"" + searchStr + "\">";
+                    html += "<input type=\"checkbox\" id=\"cb_" + code + "\" data-code=\"" + code + "\" data-name=\"" + safeName + "\">";
+                    html += "<label for=\"cb_" + code + "\">" + ex.name + unitBadgeHTML(ex.unit) + "</label>";
+                    html += "<span class=\"code\">" + code + "</span>";
+                    html += "</div>";
                 }
-                html += '</div></div>';
+                html += "</div></div>";
             }
         } else {
-            html += '<h3 onclick="if(!event.target.classList.contains(\'select-all-btn\'))toggleCategory(this)">'
-                  + '<span class="cat-label">' + c.label + ' Exercises</span> '
-                  + '<button class="select-all-btn" data-selectall-cat="' + cat + '">Select All</button>'
-                  + '<span class="arrow">\u25BC</span></h3>';
-            html += '<div class="exercise-list">';
+            html += "<h3 onclick=\"if(!event.target.classList.contains('select-all-btn'))toggleCategory(this)\">";
+            html += "<span class=\"cat-label\">" + c.label + " Exercises</span> ";
+            html += "<button class=\"select-all-btn\" data-selectall-cat=\"" + cat + "\">Select All</button>";
+            html += "<span class=\"arrow\">\u25BC</span></h3>";
+            html += "<div class=\"exercise-list\">";
             for (var code2 in c.exercises) {
-                var name = c.exercises[code2];
-                var safeName2 = name.replace(/'/g, '&#39;');
-                html += '<div class="exercise-item" data-s="' + (name + ' ' + code2).toLowerCase() + '">';
-                html += '<input type="checkbox" id="cb_' + code2 + '" data-code="' + code2 + '" data-name="' + safeName2 + '">';
-                html += '<label for="cb_' + code2 + '">' + name + '</label>';
-                html += '<span class="code">' + code2 + '</span>';
-                html += '</div>';
+                var nm = c.exercises[code2];
+                var safeName2 = nm.replace(/"/g, "&quot;");
+                var searchStr2 = (nm + " " + code2).toLowerCase();
+                html += "<div class=\"exercise-item\" data-s=\"" + searchStr2 + "\">";
+                html += "<input type=\"checkbox\" id=\"cb_" + code2 + "\" data-code=\"" + code2 + "\" data-name=\"" + safeName2 + "\">";
+                html += "<label for=\"cb_" + code2 + "\">" + nm + "</label>";
+                html += "<span class=\"code\">" + code2 + "</span>";
+                html += "</div>";
             }
         }
-
-        html += '</div></div>';
+        html += "</div></div>";
     }
     catEl.innerHTML = html;
 }
 
-/* ===========================================
-   SELECTION MANAGEMENT
-   =========================================== */
 function toggle(code, name) {
     if (selected[code]) {
         delete selected[code];
     } else {
         var info = getExerciseInfo(code);
-        var unit = info ? info.unit : 'sets-reps';
+        var unit = info ? info.unit : "sets-reps";
         var defs = getDefaults(unit);
         defs.name = name;
         defs.unit = unit;
-        defs.freq = 'daily';
+        defs.freq = "daily";
         selected[code] = defs;
     }
     refresh();
@@ -514,226 +580,203 @@ function toggle(code, name) {
 
 function remove(code) {
     delete selected[code];
-    var cb = document.getElementById('cb_' + code);
+    var cb = document.getElementById("cb_" + code);
     if (cb) cb.checked = false;
     refresh();
 }
 
 function refresh() {
     var keys = Object.keys(selected);
-    var countEl = document.getElementById('count');
+    var countEl = document.getElementById("count");
     if (countEl) countEl.textContent = keys.length;
-    var genBtn = document.getElementById('genBtn');
-    if (genBtn) genBtn.disabled = keys.length === 0;
-
-    var listEl = document.getElementById('selectedList');
+    var genBtn = document.getElementById("genBtn");
+    if (genBtn) genBtn.disabled = (keys.length === 0);
+    var listEl = document.getElementById("selectedList");
     if (!listEl) return;
-
     if (keys.length === 0) {
-        listEl.innerHTML = '<div class="empty-msg">No exercises selected yet.</div>';
+        listEl.innerHTML = "<div class=\"empty-msg\">No exercises selected yet.</div>";
         return;
     }
-
-    var freqOpts = [['daily','Daily'],['2x-daily','2x Daily'],['3x-week','3x/Week'],['alternate','Alternate Days']];
-
-    var html = '';
+    var freqOpts = [["daily","Daily"],["2x-daily","2x Daily"],["3x-week","3x/Week"],["alternate","Alternate Days"]];
+    var html = "";
     for (var i = 0; i < keys.length; i++) {
-        var code = keys[i], ex = selected[code];
-        html += '<div class="selected-exercise">';
-        html += '<span class="name">' + ex.name + ' <span class="code">' + code + '</span></span>';
-
+        var code = keys[i];
+        var ex = selected[code];
+        html += "<div class=\"selected-exercise\">";
+        html += "<span class=\"name\">" + ex.name + " <span class=\"code\">" + code + "</span></span>";
         switch (ex.unit) {
-            case 'breathing':
-                html += ' <label>Breathing Cycles <input type="number" value="' + (ex.breathingCycles || 5) + '" min="1" max="30" data-field="breathingCycles" data-code="' + code + '"></label>';
+            case "breathing":
+                html += " <label>Breathing Cycles <input type=\"number\" value=\"" + (ex.breathingCycles || 5) + "\" min=\"1\" max=\"30\" data-field=\"breathingCycles\" data-code=\"" + code + "\"></label>";
                 break;
-            case 'minutes':
-                html += ' <label>Minutes <input type="number" value="' + (ex.minutes || 10) + '" min="1" max="60" data-field="minutes" data-code="' + code + '"></label>';
+            case "minutes":
+                html += " <label>Minutes <input type=\"number\" value=\"" + (ex.minutes || 10) + "\" min=\"1\" max=\"60\" data-field=\"minutes\" data-code=\"" + code + "\"></label>";
                 break;
-            case 'reps':
-                html += ' <label>Reps <input type="number" value="' + (ex.reps || 5) + '" min="1" max="50" data-field="reps" data-code="' + code + '"></label>';
+            case "reps":
+                html += " <label>Reps <input type=\"number\" value=\"" + (ex.reps || 5) + "\" min=\"1\" max=\"50\" data-field=\"reps\" data-code=\"" + code + "\"></label>";
                 break;
-            case 'seconds-sets':
-                html += ' <label>Sets <input type="number" value="' + (ex.sets || 3) + '" min="1" max="10" data-field="sets" data-code="' + code + '"></label>';
-                html += ' <label>Seconds <input type="number" value="' + (ex.seconds || 30) + '" min="5" max="120" data-field="seconds" data-code="' + code + '"></label>';
+            case "seconds-sets":
+                html += " <label>Sets <input type=\"number\" value=\"" + (ex.sets || 3) + "\" min=\"1\" max=\"10\" data-field=\"sets\" data-code=\"" + code + "\"></label>";
+                html += " <label>Seconds <input type=\"number\" value=\"" + (ex.seconds || 30) + "\" min=\"5\" max=\"120\" data-field=\"seconds\" data-code=\"" + code + "\"></label>";
                 break;
             default:
-                html += ' <label>Sets <input type="number" value="' + (ex.sets || 3) + '" min="1" max="10" data-field="sets" data-code="' + code + '"></label>';
-                html += ' <label>Reps <input type="number" value="' + (ex.reps || 10) + '" min="1" max="30" data-field="reps" data-code="' + code + '"></label>';
-                html += ' <label>Hold(s) <input type="number" value="' + (ex.hold || '') + '" min="0" max="60" placeholder="-" data-field="hold" data-code="' + code + '"></label>';
+                html += " <label>Sets <input type=\"number\" value=\"" + (ex.sets || 3) + "\" min=\"1\" max=\"10\" data-field=\"sets\" data-code=\"" + code + "\"></label>";
+                html += " <label>Reps <input type=\"number\" value=\"" + (ex.reps || 10) + "\" min=\"1\" max=\"30\" data-field=\"reps\" data-code=\"" + code + "\"></label>";
+                html += " <label>Hold(s) <input type=\"number\" value=\"" + (ex.hold || "") + "\" min=\"0\" max=\"60\" placeholder=\"-\" data-field=\"hold\" data-code=\"" + code + "\"></label>";
                 break;
         }
-
-        html += ' <label>Freq <select data-field="freq" data-code="' + code + '">';
+        html += " <label>Freq <select data-field=\"freq\" data-code=\"" + code + "\">";
         for (var j = 0; j < freqOpts.length; j++) {
-            html += '<option value="' + freqOpts[j][0] + '"' + (ex.freq === freqOpts[j][0] ? ' selected' : '') + '>' + freqOpts[j][1] + '</option>';
+            html += "<option value=\"" + freqOpts[j][0] + "\"" + (ex.freq === freqOpts[j][0] ? " selected" : "") + ">" + freqOpts[j][1] + "</option>";
         }
-        html += '</select></label>';
-
-        html += ' <button class="remove-btn" data-remove="' + code + '">&#x2715;</button>';
-        html += '</div>';
+        html += "</select></label>";
+        html += " <button class=\"remove-btn\" data-remove=\"" + code + "\">&#x2715;</button>";
+        html += "</div>";
     }
     listEl.innerHTML = html;
 }
 
-/* ===========================================
-   URL + QR CODE GENERATION
-   =========================================== */
 function generate() {
     var keys = Object.keys(selected);
     if (!keys.length) return;
-
     var parts = [];
     for (var i = 0; i < keys.length; i++) {
-        var code = keys[i], ex = selected[code];
-        var p = code + ':';
-
+        var code = keys[i];
+        var ex = selected[code];
+        var p = code + ":";
         switch (ex.unit) {
-            case 'breathing':
-                p += 'b' + (ex.breathingCycles || 5);
+            case "breathing":
+                p += "b" + (ex.breathingCycles || 5);
                 break;
-            case 'minutes':
-                p += 'm' + (ex.minutes || 10);
+            case "minutes":
+                p += "m" + (ex.minutes || 10);
                 break;
-            case 'reps':
-                p += 'r' + (ex.reps || 5);
+            case "reps":
+                p += "r" + (ex.reps || 5);
                 break;
-            case 'seconds-sets':
-                p += (ex.sets || 3) + 'x' + (ex.seconds || 30);
+            case "seconds-sets":
+                p += (ex.sets || 3) + "x" + (ex.seconds || 30);
                 break;
             default:
-                p += (ex.sets || 3) + 'x' + (ex.reps || 10);
-                if (ex.hold && ex.hold > 0) p += 'h' + ex.hold;
+                p += (ex.sets || 3) + "x" + (ex.reps || 10);
+                if (ex.hold && ex.hold > 0) p += "h" + ex.hold;
                 break;
         }
-
-        if (ex.freq && ex.freq !== 'daily') p += '.' + ex.freq;
+        if (ex.freq && ex.freq !== "daily") p += "." + ex.freq;
         parts.push(p);
     }
-
-    var url = BASE_URL + '/plan.html?ex=' + parts.join(',');
-    var outputEl = document.getElementById('output');
-    if (outputEl) outputEl.style.display = 'block';
-    var urlBox = document.getElementById('urlBox');
+    var url = BASE_URL + "/plan.html?ex=" + parts.join(",");
+    var outputEl = document.getElementById("output");
+    if (outputEl) outputEl.style.display = "block";
+    var urlBox = document.getElementById("urlBox");
     if (urlBox) urlBox.textContent = url;
-
-    var qrDiv = document.getElementById('qrcode');
+    var qrDiv = document.getElementById("qrcode");
     if (qrDiv) {
-        qrDiv.innerHTML = '';
-        if (typeof QRCode !== 'undefined') {
+        qrDiv.innerHTML = "";
+        if (typeof QRCode !== "undefined") {
             new QRCode(qrDiv, { text: url, width: 256, height: 256, correctLevel: QRCode.CorrectLevel.M });
         } else {
-            qrDiv.innerHTML = '<p style="color:#c0392b;font-weight:bold;">QR library not loaded &mdash; use the link below.</p>';
+            qrDiv.innerHTML = "<p style=\"color:#c0392b;font-weight:bold;\">QR library not loaded. Use the link below.</p>";
         }
     }
-    if (outputEl) outputEl.scrollIntoView({ behavior: 'smooth' });
+    if (outputEl) outputEl.scrollIntoView({ behavior: "smooth" });
 }
 
 function copyURL() {
-    var url = document.getElementById('urlBox');
+    var url = document.getElementById("urlBox");
     if (!url) return;
     var text = url.textContent;
     if (navigator.clipboard) {
-        navigator.clipboard.writeText(text).then(function() { alert('URL copied!'); });
+        navigator.clipboard.writeText(text);
     } else {
-        var t = document.createElement('textarea');
+        var t = document.createElement("textarea");
         t.value = text;
         document.body.appendChild(t);
         t.select();
-        document.execCommand('copy');
+        document.execCommand("copy");
         document.body.removeChild(t);
-        alert('URL copied!');
     }
 }
 
-/* ===========================================
-   INITIALISE
-   =========================================== */
 function initApp() {
     try {
         buildUI();
 
-        document.addEventListener('click', function(e) {
+        document.addEventListener("click", function(e) {
             var target = e.target;
-
-            var subcatKey = target.getAttribute('data-selectall-subcat');
+            var subcatKey = target.getAttribute("data-selectall-subcat");
             if (subcatKey) { e.stopPropagation(); selectAllSubcat(subcatKey); return; }
-
-            var catKey = target.getAttribute('data-selectall-cat');
+            var catKey = target.getAttribute("data-selectall-cat");
             if (catKey) { e.stopPropagation(); selectAllCat(catKey); return; }
-
-            if (target.classList.contains('subcat-label') || target.classList.contains('subcat-arrow')) {
-                var header = target.closest('.subcat-header');
+            if (target.classList.contains("subcat-label") || target.classList.contains("subcat-arrow")) {
+                var header = target.closest(".subcat-header");
                 if (header) { toggleSubcat(header); return; }
             }
-            if (target.classList.contains('subcat-header')) { toggleSubcat(target); return; }
-
-            if (target.getAttribute('data-remove')) { remove(target.getAttribute('data-remove')); return; }
-            if (target.id === 'genBtn') { generate(); return; }
-            if (target.id === 'resetBtn') { resetAll(); return; }
-            if (target.classList.contains('btn-copy')) { copyURL(); return; }
+            if (target.classList.contains("subcat-header")) { toggleSubcat(target); return; }
+            if (target.getAttribute("data-remove")) { remove(target.getAttribute("data-remove")); return; }
+            if (target.id === "genBtn") { generate(); return; }
+            if (target.id === "resetBtn") { resetAll(); return; }
+            if (target.classList.contains("btn-copy")) { copyURL(); return; }
         });
 
-        document.addEventListener('change', function(e) {
+        document.addEventListener("change", function(e) {
             var target = e.target;
-            if (target.type === 'checkbox' && target.getAttribute('data-code')) {
-                var code = target.getAttribute('data-code');
-                var name = (target.getAttribute('data-name') || '').replace(/&#39;/g, "'");
+            if (target.type === "checkbox" && target.getAttribute("data-code")) {
+                var code = target.getAttribute("data-code");
+                var name = (target.getAttribute("data-name") || "").replace(/&quot;/g, "\"");
                 toggle(code, name);
                 return;
             }
-            var field = target.getAttribute('data-field');
-            var code2 = target.getAttribute('data-code');
+            var field = target.getAttribute("data-field");
+            var code2 = target.getAttribute("data-code");
             if (field && code2 && selected[code2]) {
-                selected[code2][field] = target.tagName === 'SELECT' ? target.value : +target.value;
+                selected[code2][field] = (target.tagName === "SELECT") ? target.value : +target.value;
             }
         });
 
-        var searchBox = document.getElementById('searchBox');
+        var searchBox = document.getElementById("searchBox");
         if (searchBox) {
-            searchBox.addEventListener('input', function() {
+            searchBox.addEventListener("input", function() {
                 var q = this.value.toLowerCase();
-
-                var items = document.querySelectorAll('.exercise-item');
+                var items = document.querySelectorAll(".exercise-item");
                 for (var i = 0; i < items.length; i++) {
-                    items[i].style.display = items[i].getAttribute('data-s').indexOf(q) !== -1 ? '' : 'none';
+                    items[i].style.display = (items[i].getAttribute("data-s").indexOf(q) !== -1) ? "" : "none";
                 }
-
-                var subcatLists = document.querySelectorAll('.subcat-exercises');
-                var subcatHeaders = document.querySelectorAll('.subcat-header');
+                var subcatLists = document.querySelectorAll(".subcat-exercises");
+                var subcatHeaders = document.querySelectorAll(".subcat-header");
                 for (var j = 0; j < subcatLists.length; j++) {
                     if (q) {
-                        subcatLists[j].style.display = '';
-                        var arrow = subcatHeaders[j] ? subcatHeaders[j].querySelector('.subcat-arrow') : null;
-                        if (arrow) arrow.textContent = '\u25BC';
+                        subcatLists[j].style.display = "";
+                        var arrow = subcatHeaders[j] ? subcatHeaders[j].querySelector(".subcat-arrow") : null;
+                        if (arrow) arrow.textContent = "\u25BC";
                     } else {
-                        subcatLists[j].style.display = 'none';
-                        var arrow2 = subcatHeaders[j] ? subcatHeaders[j].querySelector('.subcat-arrow') : null;
-                        if (arrow2) arrow2.textContent = '\u25B6';
+                        subcatLists[j].style.display = "none";
+                        var arrow2 = subcatHeaders[j] ? subcatHeaders[j].querySelector(".subcat-arrow") : null;
+                        if (arrow2) arrow2.textContent = "\u25B6";
                     }
                 }
-
-                var exLists = document.querySelectorAll('.exercise-list');
-                var catArrows = document.querySelectorAll('.category h3 .arrow');
+                var exLists = document.querySelectorAll(".exercise-list");
+                var catArrows = document.querySelectorAll(".category h3 .arrow");
                 for (var k = 0; k < exLists.length; k++) {
                     if (q) {
-                        exLists[k].style.display = '';
-                        if (catArrows[k]) { catArrows[k].textContent = '\u25BC'; catArrows[k].classList.remove('collapsed'); }
+                        exLists[k].style.display = "";
+                        if (catArrows[k]) {
+                            catArrows[k].textContent = "\u25BC";
+                            catArrows[k].classList.remove("collapsed");
+                        }
                     }
                 }
             });
         }
-
     } catch (err) {
-        var catEl = document.getElementById('categories');
+        var catEl = document.getElementById("categories");
         if (catEl) {
-            catEl.innerHTML = '<div style="color:red;padding:20px;font-weight:bold;background:#fff3f3;border:2px solid red;border-radius:8px;">'
-                + 'JavaScript Error: ' + err.message + '</div>';
+            catEl.innerHTML = "<div style=\"color:red;padding:20px;font-weight:bold;background:#fff3f3;border:2px solid red;border-radius:8px;\">JavaScript Error: " + err.message + "</div>";
         }
     }
 }
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initApp);
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initApp);
 } else {
     initApp();
 }
